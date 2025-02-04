@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt')
 const register = async(req,res) => {
     const {fname, lname,pword, email, age} = req.body
 
-    let hashedPWord = pword
+    let hashedPWord = await bcrypt.hash(pword, 10)
     
     const newUser = new User({
         Firstname: fname,
@@ -37,7 +37,13 @@ const deleteUser = async(req,res)=>{
 }
 
 const login = async(req,res)=>{
-    res.send(res.user)
+    if (await bcrypt.compare(req.body.pword, res.user.Password)){
+        res.send(res.user)
+    }
+    else{
+        res.json({message : "Not allowed"})
+    }
+   
 }
 
 const update = async(req,res)=>{
@@ -73,6 +79,7 @@ async function getUser(req,res,next){
     } catch (error) {
         res.json({error: error.message})
     }
+    
     res.user = user
     next()
 }
