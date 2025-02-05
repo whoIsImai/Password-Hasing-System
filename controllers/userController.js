@@ -1,12 +1,12 @@
-const User = require('../model/User')
+const user = require('../model/User')
 const bcrypt = require('bcrypt')
 
 const register = async(req,res) => {
     const {fname, lname,pword, email, age} = req.body
 
     let hashedPWord = await bcrypt.hash(pword, 10)
-    
-    const newUser = new User({
+    console.log(hashedPWord)
+    const newUser = new user({
         Firstname: fname,
         Lastname: lname,
         Password: hashedPWord,

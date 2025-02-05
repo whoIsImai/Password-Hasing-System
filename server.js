@@ -11,7 +11,7 @@ const db = mongoose.connection
 db.on("error", (error)=> console.error(error))
 db.once("open", ()=> console.log("connected to database"))
 
-app.use('/api',router)
+app.use('',router)
 
 
-app.listen(1000, ()=> console.log(`server started on http://localhost:${process.env.PORT || 1000}`))
+app.listen(process.env.PORT || 1000, ()=> console.log(`server started on http://localhost:${process.env.PORT || 1000}`))
